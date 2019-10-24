@@ -12,7 +12,8 @@
         "symfony/flex": "^1.1",
         "symfony/framework-bundle": "4.3.*",
         "symfony/mercure-bundle": "^0.1.2",
-        "symfony/yaml": "4.3.*"
+        "symfony/yaml": "4.3.*",
+        "symfony/messenger": "4.3.*"
     },
     "require-dev": {
         "api-platform/schema-generator": "^2.1",

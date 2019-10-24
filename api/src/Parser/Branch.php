@@ -4,9 +4,24 @@ namespace App\Parser;
 
 class Branch
 {
-    protected $input;
-    protected $output;
-    protected $stack;
+    protected $context;
     protected $actions;
-    protected $current;
+
+    /**
+     * Branch constructor.
+     *
+     * @param Context $context
+     * @param array   $actions
+     */
+    public function __construct(Context $context, array $actions)
+    {
+        $this->context = $context;
+        $this->actions = $actions;
+    }
+
+    public function run() {
+        foreach ($this->actions as $action) {
+            $action->run($this->context)
+        }
+    }
 }
