@@ -42,4 +42,35 @@ class Action
         $this->errorMode = $errorMode;
         $this->errorMessage = $errorMessage;
     }
+
+    public function run(Context $context) {
+        $try = 1;
+        while ($try < $this->maxRetries) {
+            $try++;
+
+            try {
+                $result = $this->type->run($context, $driver);
+
+
+            } catch (\Exception $e) {
+
+                switch ($this->errorMode) {
+                    case self::ERROR_MODE_SKIP:
+                        continue 2;
+                        break;
+                    case self::ERROR_MODE_REPORT_HERE:
+                        $context->reportError(
+                            $this->title,
+                            $this->errorMessage,
+                            $e
+                        );
+                        break;
+                    case self::ERROR_MODE_IGNORE:
+                    default:
+
+                        break;
+                }
+            }
+        }
+    }
 }

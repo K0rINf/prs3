@@ -2,6 +2,14 @@
 
 namespace App\Parser;
 
+/**
+ * Class Branch
+ *
+ * Ветка имеет общий контекст выполнения для всех actions. Это граф всех actions которые должны
+ * выполнится в одном контексте.
+ *
+ * @package App\Parser
+ */
 class Branch
 {
     protected $context;
@@ -10,18 +18,20 @@ class Branch
     /**
      * Branch constructor.
      *
-     * @param Context $context
-     * @param array   $actions
+     * @param Input  $input
+     * @param Output $output
+     * @param array  $actions
      */
-    public function __construct(Context $context, array $actions)
+    public function __construct(Input $input, Output $output, array $actions)
     {
-        $this->context = $context;
+        $this->context = new Context($input, $output);
         $this->actions = $actions;
     }
 
     public function run() {
         foreach ($this->actions as $action) {
-            $action->run($this->context)
+            /* @var Action $action */
+            $action->run($this->context);
         }
     }
 }

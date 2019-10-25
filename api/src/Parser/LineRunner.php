@@ -16,10 +16,8 @@ $action2 = new Action(
     $type
 );
 $branch = new Branch(
-    new Context(
-        new Input(),
-        new Output()
-    ),
+    new Input(),
+    new Output(),
     [
         $action1,
         $action2,

@@ -6,6 +6,7 @@ class Context
 {
     private $input;
     private $output;
+    private $responses;
 
     /**
      * Context constructor.
@@ -17,6 +18,16 @@ class Context
     {
         $this->input = $input;
         $this->output = $output;
+    }
+
+    //@todo: типизировать респонс
+    public function addResponce($responce): void
+    {
+        $this->responses[] = $responce;
+    }
+
+    public function getLastResponce() {
+        return $this->responses[count($this->responses) - 1];
     }
 
     public function save() {
