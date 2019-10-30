@@ -1,14 +1,18 @@
 <?php
 
 
-namespace App\Parser\Type\Navigation;
+namespace App\Parser\Type\Input;
 
 use App\Parser\Context;
 use App\Parser\Driver\DriverAbstract;
 use App\Parser\Type\TypeAbstract;
 use Symfony\Component\DomCrawler\Crawler;
 
-class ExtractLocation extends TypeAbstract
+/**
+ * Class SaveCurrentOutput
+ * @package App\Parser\Type\Extractor
+ */
+class PressKey extends TypeAbstract
 {
     protected $config;
 

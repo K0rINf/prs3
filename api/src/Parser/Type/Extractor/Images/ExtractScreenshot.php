@@ -1,14 +1,18 @@
 <?php
 
 
-namespace App\Parser\Type\Navigation;
+namespace App\Parser\Type\Extractor\Images;
 
 use App\Parser\Context;
 use App\Parser\Driver\DriverAbstract;
 use App\Parser\Type\TypeAbstract;
 use Symfony\Component\DomCrawler\Crawler;
 
-class ExtractList extends TypeAbstract
+/**
+ * Class ExtractImage
+ * @package App\Parser\Type\Extractor\Images
+ */
+class ExtractScreenshot extends TypeAbstract
 {
     protected $config;
 

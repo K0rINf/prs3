@@ -1,14 +1,19 @@
 <?php
 
 
-namespace App\Parser\Type\Navigation;
+namespace App\Parser\Type\Extractor\Extraction;
 
 use App\Parser\Context;
 use App\Parser\Driver\DriverAbstract;
 use App\Parser\Type\TypeAbstract;
 use Symfony\Component\DomCrawler\Crawler;
 
-class ExtractList extends TypeAbstract
+/**
+ * Тип пытается извлечь элемент из последнего респонса
+ * Class ExtractValue
+ * @package App\Parser\Type\Navigation
+ */
+class ExtractValue extends TypeAbstract
 {
     protected $config;
 
