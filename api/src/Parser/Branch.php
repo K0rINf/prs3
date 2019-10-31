@@ -32,6 +32,7 @@ class Branch
         foreach ($this->actions as $action) {
             /* @var Action $action */
             $action->run($this->context);
+            $this->context->addAction($action);
         }
     }
 }
