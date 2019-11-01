@@ -8,9 +8,18 @@ use App\Parser\Type\Navigation\ExtractAttribute;
 use App\Parser\Type\Navigation\ExtractValue;
 use App\Parser\Type\Navigation\GoToUrl;
 
-$type = new GoToUrl();
-$typeExtract = new ExtractValue();
-$typeExtractAttribute = new ExtractAttribute();
+$type = new GoToUrl([
+    // конструктор проверит наличие всех необходимых ключей и правильность их заполнения
+    'url' => 'http://ya.ru'
+]);
+
+$typeExtract = new ExtractValue([
+    'path' => '.class > #el1',
+]);
+$typeExtractAttribute = new ExtractAttribute([
+    'path' => '.class > #el1',
+    'attribute' => 'href',
+], $modifiers);
 
 $action1 = new Action(
     'first',

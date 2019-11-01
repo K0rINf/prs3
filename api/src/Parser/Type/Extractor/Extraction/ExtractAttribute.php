@@ -5,14 +5,21 @@ namespace App\Parser\Type\Extractor\Extraction;
 
 use App\Parser\Context;
 use App\Parser\Driver\DriverAbstract;
+use App\Parser\Type\ConfigArgument;
 use App\Parser\Type\TypeAbstract;
 use Symfony\Component\DomCrawler\Crawler;
 
 class ExtractAttribute extends TypeAbstract
 {
-    protected $config;
+    protected function configure(): void
+    {
+        $this->addArgument('path', ConfigArgument::REQUIRED, 'The XPath or CSS3 path element.');
+    }
 
     public function run(Context $context, DriverAbstract $driver) {
+
+        $path = $this->getArgument('path');
+
         $response = $context->getLastResponce();
         $crawler = new Crawler($response->getBody());
 

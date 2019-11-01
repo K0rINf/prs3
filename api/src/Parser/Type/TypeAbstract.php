@@ -4,28 +4,93 @@ namespace App\Parser\Type;
 
 use App\Parser\Context;
 use App\Parser\Driver\DriverAbstract;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use InvalidArgumentException;
 
 abstract class TypeAbstract
 {
-    protected $config;
+    private $definition;
+    protected $arguments = [];
 
     /**
      * TypeAbstract constructor.
      *
-     * @param TypeConfigAbstract $config
-     * @param ValidatorInterface $validator
+     * @param array $options
      */
-    public function __construct(TypeConfigAbstract $config, ValidatorInterface $validator)
+    public function __construct(array $options)
     {
-        // конфигурация должна быть валидной для типа
-        $errors = $validator->validate($config);
-        if (count($errors) > 0) {
-            $errorsString = (string) $errors;
-        }
+        $this->definition = new ArgumentDefinition();
+        $this->configure();
 
-        $this->config = $config;
+
+        // @todo replace to array_filter
+        foreach ($this->definition->getArguments() as $argument) {
+            $value = $options[$argument->getName()];
+
+            if (empty($value) && $argument->isRequired()) {
+                throw new InvalidArgumentException('Argument '.$argument->getName().' is required');
+            }
+
+            $this->setArgument($argument->getName(), $value);
+        }
     }
 
-    abstract function run(Context $context, DriverAbstract $driver);
+    /**
+     * Метод должен установить аргументы конфигурации для типа
+     * @return void
+     */
+    abstract protected function configure(): void;
+
+    /**
+     * Отработка типа
+     *
+     * @param Context        $context
+     * @param DriverAbstract $driver
+     *
+     * @return mixed
+     */
+    abstract protected function run(Context $context, DriverAbstract $driver);
+
+    /**
+     * Adds an argument.
+     *
+     * @param string               $name        The argument name
+     * @param int|null             $mode        The argument mode: InputArgument::REQUIRED or InputArgument::OPTIONAL
+     * @param string               $description A description text
+     * @param string|string[]|null $default     The default value (for InputArgument::OPTIONAL mode only)
+     *
+     * @return $this
+     * @throws InvalidArgumentException When argument mode is not valid
+     *
+     */
+    public function addArgument($name, $mode = null, $description = '', $default = null)
+    {
+        $this->definition->addArgument(new ConfigArgument($name, $mode, $description, $default));
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getArgument($name)
+    {
+        if (!$this->definition->hasArgument($name)) {
+            throw new InvalidArgumentException(sprintf('The "%s" argument does not exist.', $name));
+        }
+
+        return $this->arguments[$name] ?? $this->definition->getArgument($name)->getDefault();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setArgument($name, $value): void
+    {
+        if (!$this->definition->hasArgument($name)) {
+            throw new InvalidArgumentException(sprintf('The "%s" argument does not exist.', $name));
+        }
+
+        $this->arguments[$name] = $value;
+    }
+
 }
