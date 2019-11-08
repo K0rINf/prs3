@@ -43,17 +43,18 @@ class Action
         $this->errorMessage = $errorMessage;
     }
 
+    /**
+     * Выполнение Action
+     * @param Context $context
+     */
     public function run(Context $context) {
-        $try = 1;
-        while ($try < $this->maxRetries) {
-            $try++;
+        $retry = 0;
+        while ($retry < $this->maxRetries) {
+            $retry++;
 
             try {
                 $result = $this->type->run($context, $driver);
-
-
             } catch (\Exception $e) {
-
                 switch ($this->errorMode) {
                     case self::ERROR_MODE_SKIP:
                         continue 2;

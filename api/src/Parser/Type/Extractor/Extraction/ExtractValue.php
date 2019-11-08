@@ -16,7 +16,7 @@ use Symfony\Component\DomCrawler\Crawler;
  */
 class ExtractValue extends TypeAbstract
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this->addArgument('path', ConfigArgument::REQUIRED, 'The XPath or CSS3 path element.');
     }

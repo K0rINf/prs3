@@ -10,17 +10,18 @@ abstract class TypeAbstract
 {
     private $definition;
     protected $arguments = [];
+    protected $modifiers = [];
 
     /**
      * TypeAbstract constructor.
      *
-     * @param array $options
+     * @param array $options Массив с параметрами для типа
+     * @param array $modifiers Массив с модификаторами типа
      */
-    public function __construct(array $options)
+    public function __construct(array $options, array $modifiers = [])
     {
         $this->definition = new ArgumentDefinition();
         $this->configure();
-
 
         // @todo replace to array_filter
         foreach ($this->definition->getArguments() as $argument) {
@@ -32,6 +33,11 @@ abstract class TypeAbstract
 
             $this->setArgument($argument->getName(), $value);
         }
+
+        foreach ($modifiers as $modifier) {
+            $this->modifiers[] = $modifier;
+        }
+
     }
 
     /**
@@ -49,6 +55,11 @@ abstract class TypeAbstract
      * @return mixed
      */
     abstract protected function run(Context $context, DriverAbstract $driver);
+
+    public function execute(Context $context, DriverAbstract $driver) {
+        $result = $this->run($context, $driver);
+        foreach ($this->mo)
+    }
 
     /**
      * Adds an argument.

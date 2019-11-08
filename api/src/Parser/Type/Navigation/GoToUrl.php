@@ -5,6 +5,7 @@ namespace App\Parser\Type\Navigation;
 
 use App\Parser\Context;
 use App\Parser\Driver\DriverAbstract;
+use App\Parser\Type\ConfigArgument;
 use App\Parser\Type\TypeAbstract;
 
 /**
@@ -14,9 +15,14 @@ use App\Parser\Type\TypeAbstract;
  */
 class GoToUrl extends TypeAbstract
 {
-    protected $config;
+    protected function configure(): void
+    {
+        $this->addArgument('url', ConfigArgument::REQUIRED, 'url want to go');
+    }
 
     public function run(Context $context, DriverAbstract $driver) {
+        $url = $this->getArgument('url');
+
         $responce = $driver->request(
             $this->config->method,
             $this->config->url,
