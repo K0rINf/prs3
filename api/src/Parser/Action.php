@@ -2,7 +2,7 @@
 
 namespace App\Parser;
 
-use App\Parser\Type\TypeAbstract;
+use App\Parser\Type\AbstractType;
 use RuntimeException;
 
 class Action
@@ -19,7 +19,7 @@ class Action
 
     public function __construct(
         string $title,
-        TypeAbstract $type,
+        AbstractType $type,
         int $maxRetries = 1,
         string $errorMode = self::ERROR_MODE_SKIP,
         string $errorMessage = ''
@@ -53,7 +53,7 @@ class Action
             $retry++;
 
             try {
-                $result = $this->type->run($context, $driver);
+                $result = $this->type->execute($context, $driver);
             } catch (\Exception $e) {
                 switch ($this->errorMode) {
                     case self::ERROR_MODE_SKIP:
