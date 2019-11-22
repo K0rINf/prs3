@@ -56,19 +56,18 @@ abstract class AbstractType
      * Отработка типа
      *
      * @param Context        $context
-     * @param DriverAbstract $driver
      *
      * @return mixed
      */
-    abstract protected function run(Context $context, DriverAbstract $driver);
+    abstract protected function run(Context $context);
 
     /**
      * Выполнение типа и приминение модификаторов к результату
      * @param Context        $context
      * @param DriverAbstract $driver
      */
-    public function execute(Context $context, DriverAbstract $driver) {
-        $result = $this->run($context, $driver);
+    public function execute(Context $context) {
+        $result = $this->run($context);
 //        foreach ($this->modifiers as $modifier) {
 //            $result = $modifier->run($result);
 //        }
@@ -117,4 +116,14 @@ abstract class AbstractType
         $this->arguments[$name] = $value;
     }
 
+    public function getArguments()
+    {
+        $arReturn = [];
+        $arguments = $this->definition->getArguments();
+        foreach ($arguments as $argument) {
+            $arReturn[$argument->getName()] = $this->getArgument($argument->getName());
+        }
+        return $arReturn;
+    }
 }
+

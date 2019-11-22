@@ -2,7 +2,7 @@
 
 namespace App\Parser\Driver;
 
-class ServerDriver implements DriverInterface
+class SeleniumDriver implements DriverInterface
 {
     protected $client;
 

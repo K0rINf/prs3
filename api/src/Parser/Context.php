@@ -2,12 +2,15 @@
 
 namespace App\Parser;
 
+use App\Parser\Driver\DriverInterface;
+
 class Context
 {
     private $input;
     private $output;
     private $responses = [];
     private $actions = [];
+    private $driver;
 
     /**
      * Context constructor.
@@ -15,10 +18,11 @@ class Context
      * @param Input  $input
      * @param Output $output
      */
-    public function __construct(Input $input, Output $output)
+    public function __construct(Input $input, Output $output, DriverInterface $driver)
     {
         $this->input = $input;
         $this->output = $output;
+        $this->driver = $driver;
     }
 
     //@todo: типизировать респонс
@@ -60,6 +64,14 @@ class Context
     public function getActions(): array
     {
         return $this->actions;
+    }
+
+    /**
+     * @return DriverInterface
+     */
+    public function getDriver(): DriverInterface
+    {
+        return $this->driver;
     }
 }
 

@@ -2,11 +2,13 @@
 
 namespace App\Parser;
 
+use App\Parser\Driver\DriverInterface;
+
 /**
  * Class Branch
  *
- * Ветка имеет общий контекст выполнения для всех actions. Это граф всех actions которые должны
- * выполнится в одном контексте.
+ * Это граф всех actions которые должны выполнится в одном общем контексте.
+ * Ветка имеет общий контекст выполнения для всех actions.
  *
  * @package App\Parser
  */
@@ -18,16 +20,18 @@ class Branch
     /**
      * Branch constructor.
      *
-     * @param Input  $input
-     * @param Output $output
-     * @param array  $actions
+     * @param Context $context
+     * @param array   $actions
      */
-    public function __construct(Input $input, Output $output, array $actions)
+    public function __construct(Context $context, array $actions)
     {
-        $this->context = new Context($input, $output);
+        $this->context = $context;
         $this->actions = $actions;
     }
 
+    /**
+     * Выполенние каждого action и сохранение его в контексте
+     */
     public function run() {
         foreach ($this->actions as $action) {
             /* @var Action $action */

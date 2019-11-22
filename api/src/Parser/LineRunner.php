@@ -14,8 +14,7 @@ $modifiers = [];
 $scenario = new Scenario(
     [
         new Branch(
-            new Input(),
-            new Output(),
+            new Context(new Input(), new Output(), new ServerDriver()),
             [
                 new Action(
                     'first',
@@ -48,15 +47,13 @@ $scenario = new Scenario(
                         ], $modifiers
                     )
                 ),
-            ]
+            ],
         ),
         new Branch(
-            new Input(),
-            new Output(),
-            []
+            new Context(new Input(), new Output(), new ServerDriver()),
+            [],
         ),
     ],
-    new ServerDriver()
 );
 $scenario->run();
 

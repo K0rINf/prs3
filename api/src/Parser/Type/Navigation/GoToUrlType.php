@@ -5,6 +5,7 @@ namespace App\Parser\Type\Navigation;
 
 use App\Parser\Context;
 use App\Parser\Driver\DriverAbstract;
+use App\Parser\Driver\DriverInterface;
 use App\Parser\Type\ConfigArgument;
 use App\Parser\Type\AbstractType;
 
@@ -20,10 +21,10 @@ class GoToUrl extends AbstractType
         $this->addArgument('url', ConfigArgument::REQUIRED, 'url want to go');
     }
 
-    public function run(Context $context, DriverAbstract $driver) {
+    public function run(Context $context) {
         $url = $this->getArgument('url');
 
-        $responce = $driver->request(
+        $responce = $context->getDriver()->request(
             $this->config->method,
             $this->config->url,
             $this->config->headers,

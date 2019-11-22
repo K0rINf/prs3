@@ -5,35 +5,31 @@ namespace App\Parser\Type\Extractor\Extraction;
 
 use App\Parser\Context;
 use App\Parser\Driver\DriverAbstract;
-use App\Parser\Type\ConfigArgument;
-use App\Parser\Type\AbstractType;
+use App\Parser\Type\Extractor\AbstractExtractorType;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
- * Тип пытается извлечь элемент из последнего респонса
+ * Тип пытается извлечь элемент из последнего HTTP ответа
  * Class ExtractValue
  * @package App\Parser\Type\Navigation
  */
-class ExtractValue extends AbstractType
+class ExtractValueType extends AbstractExtractorType
 {
-    protected function configure(): void
+    public function run(Context $context)
     {
-        $this->addArgument('path', ConfigArgument::REQUIRED, 'The XPath or CSS3 path element.');
-    }
+        $path = $this->getArgument('path');
+        $name = $this->getArgument('output');
+        $append = $this->getArgument('append');
 
-    public function run(Context $context, DriverAbstract $driver) {
         $response = $context->getLastResponce();
         $crawler = new Crawler($response->getBody());
 
-        $value = $crawler->filter($this->config->path)->text();
+        $value = $crawler->filter($path)->text();
 
-        if ($this->config->output) {
-            if ($this->config->append) {
-                $value = $context->getOutputVariable($this->config->output) . $value;
-                $context->setOutputVariable($this->config->output, $value);
-            } else {
-                $context->setOutputVariable($this->config->output, $value);
-            }
+        if ($append) {
+            $context->getOutput()->add($name, $value);
+        } else {
+            $context->getOutput()->set($name, $value);
         }
     }
 }

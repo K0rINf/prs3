@@ -53,7 +53,7 @@ class Action
             $retry++;
 
             try {
-                $result = $this->type->execute($context, $driver);
+                $result = $this->type->execute($context);
             } catch (\Exception $e) {
                 switch ($this->errorMode) {
                     case self::ERROR_MODE_SKIP:
