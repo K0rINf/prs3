@@ -27,7 +27,7 @@ abstract class AbstractType
      * @param array $options Массив с параметрами для типа
      * @param Modifier $modifier модификатор для типа
      */
-    public function __construct(array $options, Modifier $modifier)
+    public function __construct(array $options, Modifier $modifier = null)
     {
         $this->definition = new ArgumentDefinition();
         $this->configure();
@@ -87,7 +87,7 @@ abstract class AbstractType
      */
     public function addArgument($name, $mode = null, $description = '', $default = null)
     {
-        $this->definition->addArgument(new ConfigArgument($name, $mode, $description, $default));
+        $this->definition->addArgument($name, $mode, $description, $default);
 
         return $this;
     }

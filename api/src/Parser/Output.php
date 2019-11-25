@@ -12,9 +12,15 @@ class Output
      *
      * @param $storage
      */
-    public function __construct(Storage $storage)
+    public function __construct()
+//    public function __construct(Storage $storage)
     {
-        $this->storage = $storage;
+//        $this->storage = $storage;
+    }
+
+    public function get($name)
+    {
+        return $this->items[$name];
     }
 
     /**

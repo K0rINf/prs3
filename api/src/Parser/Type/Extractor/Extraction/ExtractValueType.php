@@ -22,7 +22,7 @@ class ExtractValueType extends AbstractExtractorType
         $append = $this->getArgument('append');
 
         $response = $context->getLastResponce();
-        $crawler = new Crawler($response->getBody());
+        $crawler = new Crawler($response->getContent());
 
         $value = $crawler->filter($path)->text();
 

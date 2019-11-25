@@ -40,7 +40,7 @@ class ArgumentDefinition
      *
      * @throws LogicException When incorrect argument is given
      */
-    public function addArgument($name, $mode = null, $description = '', $default = null)
+    public function addArgument(string $name, $mode = null, $description = '', $default = null)
     {
         $argument = new ConfigArgument($name, $mode, $description, $default);
 
@@ -48,23 +48,23 @@ class ArgumentDefinition
             throw new LogicException(sprintf('An argument with name "%s" already exists.', $argument->getName()));
         }
 
-        if ($this->hasAnArrayArgument) {
-            throw new LogicException('Cannot add an argument after an array argument.');
-        }
+//        if ($this->hasAnArrayArgument) {
+//            throw new LogicException('Cannot add an argument after an array argument.');
+//        }
 
-        if ($argument->isRequired() && $this->hasOptional) {
-            throw new LogicException('Cannot add a required argument after an optional one.');
-        }
+//        if ($argument->isRequired() && $this->hasOptional) {
+//            throw new LogicException('Cannot add a required argument after an optional one.');
+//        }
 
-        if ($argument->isArray()) {
-            $this->hasAnArrayArgument = true;
-        }
-
-        if ($argument->isRequired()) {
-            ++$this->requiredCount;
-        } else {
-            $this->hasOptional = true;
-        }
+//        if ($argument->isArray()) {
+//            $this->hasAnArrayArgument = true;
+//        }
+//
+//        if ($argument->isRequired()) {
+//            ++$this->requiredCount;
+//        } else {
+//            $this->hasOptional = true;
+//        }
 
         $this->arguments[$argument->getName()] = $argument;
     }
