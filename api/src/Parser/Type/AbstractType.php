@@ -34,7 +34,7 @@ abstract class AbstractType
 
         // @todo replace to array_filter
         foreach ($this->definition->getArguments() as $argument) {
-            $value = $options[$argument->getName()];
+            $value = $options[$argument->getName()] ?? null;
 
             if (empty($value) && $argument->isRequired()) {
                 throw new InvalidArgumentException('Argument '.$argument->getName().' is required');

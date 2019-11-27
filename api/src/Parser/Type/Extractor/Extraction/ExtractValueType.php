@@ -15,21 +15,9 @@ use Symfony\Component\DomCrawler\Crawler;
  */
 class ExtractValueType extends AbstractExtractorType
 {
-    public function run(Context $context)
+    public function extract(string $path, string $content, ?string $attr = null): ?string
     {
-        $path = $this->getArgument('path');
-        $name = $this->getArgument('output');
-        $append = $this->getArgument('append');
-
-        $response = $context->getLastResponce();
-        $crawler = new Crawler($response->getContent());
-
-        $value = $crawler->filter($path)->text();
-
-        if ($append) {
-            $context->getOutput()->add($name, $value);
-        } else {
-            $context->getOutput()->set($name, $value);
-        }
+        $crawler = new Crawler($content);
+        return $crawler->filter($path)->text();
     }
 }
