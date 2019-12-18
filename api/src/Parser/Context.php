@@ -3,6 +3,7 @@
 namespace App\Parser;
 
 use App\Parser\Driver\DriverInterface;
+use Symfony\Component\BrowserKit\Response;
 
 class Context
 {
@@ -26,13 +27,13 @@ class Context
     }
 
     //@todo: типизировать респонс
-    public function addResponce($responce): array
+    public function addResponse(Response $response): array
     {
-        $this->responses[] = $responce;
+        $this->responses[] = $response;
         return $this->responses;
     }
 
-    public function getLastResponce() {
+    public function getLastResponse(): ?Response {
         return $this->responses[count($this->responses) - 1];
     }
 

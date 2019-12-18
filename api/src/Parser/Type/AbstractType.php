@@ -67,7 +67,7 @@ abstract class AbstractType
      * @param DriverAbstract $driver
      */
     public function execute(Context $context) {
-        $result = $this->run($context);
+        $this->run($context);
 //        foreach ($this->modifiers as $modifier) {
 //            $result = $modifier->run($result);
 //        }

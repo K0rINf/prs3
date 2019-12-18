@@ -11,7 +11,8 @@ namespace App\Parser\Modifier\Operation;
  */
 class AdditionOperation extends AbstractOperation
 {
-    public function execute($value)
+
+    public function execute($to, ...$args)
     {
         return $this->source + $value;
     }

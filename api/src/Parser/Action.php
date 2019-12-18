@@ -3,6 +3,7 @@
 namespace App\Parser;
 
 use App\Parser\Type\AbstractType;
+use Exception;
 use RuntimeException;
 
 class Action
@@ -53,8 +54,8 @@ class Action
             $retry++;
 
             try {
-                $result = $this->type->execute($context);
-            } catch (\Exception $e) {
+                $this->type->execute($context);
+            } catch (Exception $e) {
                 switch ($this->errorMode) {
                     case self::ERROR_MODE_SKIP:
                         continue 2;

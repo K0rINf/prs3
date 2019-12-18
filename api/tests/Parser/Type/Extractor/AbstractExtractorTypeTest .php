@@ -29,7 +29,7 @@ class AbstractExtractorTypeTest extends TestCase
                 'name',
                 null
             );
-        $this->context->method('getLastResponce')
+        $this->context->method('getLastResponse')
             ->willReturn(new Response(self::$html));
         $this->context->method('getOutput')
             ->willReturn($this->output);
@@ -55,7 +55,7 @@ class AbstractExtractorTypeTest extends TestCase
                 'name',
                 null
             );
-        $this->context->method('getLastResponce')
+        $this->context->method('getLastResponse')
             ->willReturn(new Response(self::$html));
         $this->context->method('getOutput')
             ->willReturn($this->output);

@@ -25,11 +25,11 @@ class Modifier
     {
     }
 
-    public function __invoke(NodeInterface $node, DataSource $dataSource, OperationInterface $operation)
+    public static function modify(NodeInterface $conditions, DataSource $dataSource, OperationInterface $operation, ...$args)
     {
         $conditionFacade = new ConditionFacade();
-        if ($conditionFacade->executeCombineConditions($node, $dataSource)) {
-            return $operation->execute($dataSource);
+        if ($conditionFacade->executeCombineConditions($conditions, $dataSource)) {
+            return $operation->execute($args);
         }
     }
 }

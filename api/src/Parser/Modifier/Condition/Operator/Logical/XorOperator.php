@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace LogicTree\Operator\Logical;
+namespace App\Parser\Modifier\Condition\Operator\Logical;
 
-use LogicTree\Operator\OperatorInterface;
+use App\Parser\Modifier\Condition\Operator\OperatorInterface;
 use function count;
 
 /**

@@ -27,7 +27,7 @@ class ConditionFacade
         $this->conditionManager = $conditionManager ?? new ConditionManager($this->operatorPool);
     }
 
-    public function addOperator(string $type, string $operatorCode, OperatorInterface $operator): LogicTreeFacade
+    public function addOperator(string $type, string $operatorCode, OperatorInterface $operator): ConditionFacade
     {
         $this->operatorPool->addOperator($type, $operatorCode, $operator);
         return $this;

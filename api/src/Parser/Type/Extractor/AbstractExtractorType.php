@@ -33,7 +33,7 @@ abstract class AbstractExtractorType extends AbstractType
         $append = $this->getArgument('append');
         $attr = $this->getArgument('attr');
 
-        $response = $context->getLastResponce();
+        $response = $context->getLastResponse();
         $value = $this->extract($path, $response->getContent(), $attr);
 
         if ($append) {

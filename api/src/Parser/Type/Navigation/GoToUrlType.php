@@ -32,6 +32,6 @@ class GoToUrl extends AbstractType
             $this->config->body
         );
 
-        $context->addResponce($responce);
+        $context->addResponse($responce);
     }
 }
