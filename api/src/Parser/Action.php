@@ -6,6 +6,12 @@ use App\Parser\Type\AbstractType;
 use Exception;
 use RuntimeException;
 
+/**
+ * Class Action
+ * @package App\Parser
+ * Действие парсера, знает сколько раз повторяться, что делать в случае ошибки, какой тип должен отработать с контекстом
+ *
+ */
 class Action
 {
     public const ERROR_MODE_IGNORE = 'IGNORE';
@@ -45,7 +51,7 @@ class Action
     }
 
     /**
-     * Выполнение Action
+     * Выполнение Action.
      * @param Context $context
      */
     public function run(Context $context) {
@@ -54,7 +60,9 @@ class Action
             $retry++;
 
             try {
-                $this->type->execute($context);
+
+                $this->type->run($context);
+
             } catch (Exception $e) {
                 switch ($this->errorMode) {
                     case self::ERROR_MODE_SKIP:

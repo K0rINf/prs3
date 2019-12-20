@@ -12,10 +12,21 @@ use App\Parser\Type\AbstractType;
  * Class GoToUrl
  * @package App\Parser\Type\Navigation
  */
-class HistoryBack extends AbstractType
+class HistoryBackType extends AbstractType
 {
-    protected $config;
+    /**
+     * @inheritDoc
+     */
+    protected function configure(): void
+    {
+        // TODO: Implement configure() method.
+    }
 
-    public function run(Context $context, DriverAbstract $driver) {
+    /**
+     * @inheritDoc
+     */
+    protected function run(Context $context)
+    {
+        // TODO: Implement run() method.
     }
 }

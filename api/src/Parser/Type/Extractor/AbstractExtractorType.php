@@ -5,6 +5,7 @@ namespace App\Parser\Type\Extractor;
 
 
 use App\Parser\Context;
+use App\Parser\Modifier\Modifier;
 use App\Parser\Type\AbstractType;
 use App\Parser\Type\ConfigArgument;
 use Symfony\Component\DomCrawler\Crawler;
@@ -16,7 +17,19 @@ use Symfony\Component\DomCrawler\Crawler;
  */
 abstract class AbstractExtractorType extends AbstractType
 {
+    protected $modifiers = [];
+
     abstract public function extract(string $path, string $content, ?string $attr = null): ?string;
+
+    /**
+     * @param array         $options Массив с параметрами для типа
+     * @param iterable|null $modifiers
+     */
+    public function __construct(array $options, iterable $modifiers = null)
+    {
+        parent::__construct($options);
+        $this->modifiers = $modifiers;
+    }
 
     protected function configure(): void
     {
@@ -28,19 +41,29 @@ abstract class AbstractExtractorType extends AbstractType
 
     public function run(Context $context)
     {
+        $value = null;
         $path = $this->getArgument('path');
         $name = $this->getArgument('output');
         $append = $this->getArgument('append');
         $attr = $this->getArgument('attr');
 
         $response = $context->getLastResponse();
-        $value = $this->extract($path, $response->getContent(), $attr);
+        if ($response) {
+            $value = $this->extract($path, $response->getContent(), $attr);
+        }
+
+        // обработка модификаторов
+        foreach ($this->modifiers as $modifier) {
+            /* @var $modifier Modifier */
+            $value = $modifier->modify($context, $value);
+        }
 
         if ($append) {
             $context->getOutput()->add($name, $value);
         } else {
             $context->getOutput()->set($name, $value);
         }
-    }
 
+        return $value;
+    }
 }

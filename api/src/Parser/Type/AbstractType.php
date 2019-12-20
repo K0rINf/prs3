@@ -12,22 +12,22 @@ use InvalidArgumentException;
  * Class AbstractType
  * @package App\Parser\Type
  *
- *          Разделить типы на типы которые могут использовать модификаторы и на типы которые не используют модификаторы
+ * Тип обрабатывается в Action. Тип имеет свои параметры, и может изменять контекст ветки.
+ * Типы могут пораждать другие ветки.
+ *
  */
 
 abstract class AbstractType
 {
     private $definition;
     protected $arguments = [];
-    protected $modifier;
 
     /**
      * AbstractType constructor.
      *
-     * @param array $options Массив с параметрами для типа
-     * @param Modifier $modifier модификатор для типа
+     * @param array         $options Массив с параметрами для типа
      */
-    public function __construct(array $options, Modifier $modifier = null)
+    public function __construct(array $options)
     {
         $this->definition = new ArgumentDefinition();
         $this->configure();
@@ -42,8 +42,6 @@ abstract class AbstractType
 
             $this->setArgument($argument->getName(), $value);
         }
-
-        $this->modifier = $modifier;
     }
 
     /**
@@ -53,25 +51,13 @@ abstract class AbstractType
     abstract protected function configure(): void;
 
     /**
-     * Отработка типа
+     * Выполнение логики типа
      *
      * @param Context        $context
      *
      * @return mixed
      */
-    abstract protected function run(Context $context);
-
-    /**
-     * Выполнение типа и приминение модификаторов к результату
-     * @param Context        $context
-     * @param DriverAbstract $driver
-     */
-    public function execute(Context $context) {
-        $this->run($context);
-//        foreach ($this->modifiers as $modifier) {
-//            $result = $modifier->run($result);
-//        }
-    }
+    abstract public function run(Context $context);
 
     /**
      * Adds an argument.

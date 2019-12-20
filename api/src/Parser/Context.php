@@ -25,8 +25,7 @@ class Context
         $this->output = $output;
         $this->driver = $driver;
     }
-
-    //@todo: типизировать респонс
+    
     public function addResponse(Response $response): array
     {
         $this->responses[] = $response;

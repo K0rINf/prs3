@@ -18,7 +18,7 @@ class Output
 //        $this->storage = $storage;
     }
 
-    public function get($name)
+    public function get(string $name)
     {
         return $this->items[$name];
     }
@@ -28,7 +28,7 @@ class Output
      * @param $name
      * @param $value
      */
-    public function set($name, $value)
+    public function set(string $name, $value)
     {
         $this->items[$name] = $value;
     }
@@ -38,7 +38,7 @@ class Output
      * @param $name
      * @param $value
      */
-    public function add($name, $value)
+    public function add(string $name, $value)
     {
         $this->items[$name][] = $value;
     }
@@ -47,7 +47,7 @@ class Output
      * Сохраняет значение переменной в сторадже
      * @param $name
      */
-    public function save($name = null)
+    public function save(?string $name = null)
     {
         if ($name === null) {
             $this->storage->save($this->items);
@@ -56,8 +56,13 @@ class Output
         }
     }
 
-    public function remove($name)
+    public function remove(string $name)
     {
         unset($this->items[$name]);
+    }
+
+    public function getAll()
+    {
+        return $this->items;
     }
 }

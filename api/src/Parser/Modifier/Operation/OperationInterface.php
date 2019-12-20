@@ -7,5 +7,5 @@ namespace App\Parser\Modifier\Operation;
 interface OperationInterface
 {
     // приминение операции к source с параметром $args с аргументами
-    public function execute(...$args);
+    public function execute($value);
 }
